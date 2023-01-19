@@ -29,7 +29,7 @@ export default function SingleEvent() {
                 {data.fields.longdescription_fr !== undefined ?
                     <div dangerouslySetInnerHTML={{ __html: data.fields.longdescription_fr }} />
                     : data.fields.description_fr}
-                <Link to={"/"} state={{ city: city, param: param }}>Retour</Link>
+                <Link to={"/"} state={{ city: city, param: param }} id="btn-retour">Retour</Link>
             </div>
         </div>
     )

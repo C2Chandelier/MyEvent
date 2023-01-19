@@ -4,3 +4,8 @@
     flex-direction: row;
     gap: 20px;
 }
+
+#btn-retour {
+    position: relative;
+    z-index: 100;
+}
