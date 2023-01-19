@@ -1,7 +1,26 @@
 .navbarcontainer {
-    background-color: blue;
+    background-color: rgb(119, 119, 137);
+    color: black;
+    display: flex;
+    align-items: center;
     width: 100%;
     height: 100px;
+    justify-content: space-around;
+}
+.list{
+    display: flex;
+    align-items: center;
+    list-style: none;
+}
+.listItem{
+    margin-right: 20px;
+    font-weight: 500;
+    cursor: pointer;
+}
+.avatar{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
 }
 
 @media only screen and (max-width: 320px) {

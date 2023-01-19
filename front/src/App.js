@@ -6,7 +6,6 @@ import Home from './component/homepage/homepage';
 import SingleEvent from './component/SingleEvent/SingleEvent';
 import Login from './component/login/login';
 import Register from './component/register/register';
- 
 
 export default class App extends Component {
   render(){
