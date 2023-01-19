@@ -1,0 +1,11 @@
+.navbarcontainer {
+    background-color: blue;
+    width: 100%;
+    height: 100px;
+}
+
+@media only screen and (max-width: 320px) {
+    .navbarcontainer {
+        height: 50px;
+    }
+}

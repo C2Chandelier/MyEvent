@@ -1,0 +1,6 @@
+.titleandimg {
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}

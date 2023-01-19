@@ -1,0 +1,66 @@
+.containerHome {
+    display: flex;
+}
+
+.recherche {
+    width: 20%;
+    height: 100vh;
+}
+
+.containeurResult {
+    width: 100%;
+}
+
+.listeevenement {
+    display: flex;
+    flex-direction: column;
+}
+
+.titleandimg {
+    display: flex;
+}
+
+.titleandimg img {
+    height: 100%;
+}
+
+@media only screen and (max-width: 320px) {
+    .containerHome {
+        flex-direction: column;
+    }
+    .recherche {
+        display: contents;
+        width: 100%;
+        height: auto;
+    }
+    .recherche select {
+        margin-left: 10%;
+        width: 50%;
+    }
+    .recherche input {
+        margin-left: 10%;
+        width: 50%;
+    }
+    .titleandimg {
+      flex-direction: column;
+      width: auto;
+      font-size: 10px;
+    }
+    .titleandimg img {
+        width: 50%;
+        height: 50%;
+    }
+    .titleandimg div {
+        word-wrap: break-word;
+    }
+    .OneItem {
+        width: auto;
+        font-size: 8px;
+    }
+    .OneItem h1 {
+        font-size: 10px;
+    }
+    .OneItem a {
+        font-size: 6px;
+    }
+  }
