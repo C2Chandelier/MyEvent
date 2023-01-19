@@ -8,6 +8,9 @@ import './register.css';
 
 
 export default function Register(){
+    
+
+
     const [pseudo, setPseudo] = useState("");
     const navigate = useNavigate();
     const parametre = useLocation();
@@ -32,8 +35,12 @@ export default function Register(){
               "pseudo": pseudo,
               "mail": email,
               "avatar": image,
-              "description": "Ici renseigne ta description..."
+              "description": "Ici renseigne t'as description..."
             })  
+            .then((res)=>{
+                let id_user = res.data.id
+                localStorage.setItem('id_user',id_user);
+            })
             navigate("/")
         }
        })
