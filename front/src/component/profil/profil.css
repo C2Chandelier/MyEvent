@@ -1,0 +1,8 @@
+.infosProfil {
+    display: flex;
+}
+
+.pseudoAnddesProfil {
+    display: flex;
+    flex-direction: column;
+}

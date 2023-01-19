@@ -21,7 +21,7 @@ function Home() {
     console.log(city + "/" + keywords)
     if (params.state !== null) {
       if (params.state.city !== "" && params.state.param !== "") {
-        axios("https://public.opendatasoft.com/api/records/1.0/search/?dataset=evenements-publics-openagenda&q=&rows=20&start=" + start + "&facet=keywords_fr&facet=lastdate_begin&facet=location_city&refine.keywords_fr=" + params.state.param + "&refine.lastdate_begin=2023&refine.location_city=" + params.state.city)
+        axios("https://public.opendatasoft.com/api/records/1.0/search/?dataset=evenements-publics-openagenda&q=&sort=updatedat&rows=20&start=" + start + "&facet=keywords_fr&facet=lastdate_begin&facet=location_city&refine.keywords_fr=" + params.state.param + "&refine.lastdate_begin=2023&refine.location_city=" + params.state.city)
           .then((response) => {
             setData(response.data)
             setCity(params.state.city)
@@ -30,14 +30,14 @@ function Home() {
           })
       }
       if (params.state.city !== "" && params.state.param === "") {
-        axios("https://public.opendatasoft.com/api/records/1.0/search/?dataset=evenements-publics-openagenda&q=&rows=20&start=" + start + "&facet=lastdate_begin&facet=location_city&refine.lastdate_begin=2023&refine.location_city=" + params.state.city)
+        axios("https://public.opendatasoft.com/api/records/1.0/search/?dataset=evenements-publics-openagenda&q=&sort=updatedat&rows=20&start=" + start + "&facet=lastdate_begin&facet=location_city&refine.lastdate_begin=2023&refine.location_city=" + params.state.city)
           .then((response) => {
             setData(response.data)
             setCity(params.state.city)
             params.state = null;
           })
       }
-      
+    
     }
     else {
       if (city === "") {
@@ -91,13 +91,13 @@ function Home() {
           let ville = distancetableau[index].name
           setCity(ville)
           if (keywords !== "") {
-            axios("https://public.opendatasoft.com/api/records/1.0/search/?dataset=evenements-publics-openagenda&q=&rows=20&start=" + start + "&facet=keywords_fr&facet=lastdate_begin&facet=location_city&refine.keywords_fr=" + keywords + "&refine.lastdate_begin=2023&refine.location_city=" + ville)
+            axios("https://public.opendatasoft.com/api/records/1.0/search/?dataset=evenements-publics-openagenda&q=&sort=updatedat&rows=20&start=" + start + "&facet=keywords_fr&facet=lastdate_begin&facet=location_city&refine.keywords_fr=" + keywords + "&refine.lastdate_begin=2023&refine.location_city=" + ville)
               .then((response) => {
                 setData(response.data)
               })
           }
           else {
-            axios("https://public.opendatasoft.com/api/records/1.0/search/?dataset=evenements-publics-openagenda&q=&rows=20&start=" + start + "&facet=lastdate_begin&facet=location_city&refine.lastdate_begin=2023&refine.location_city=" + ville)
+            axios("https://public.opendatasoft.com/api/records/1.0/search/?dataset=evenements-publics-openagenda&q=&sort=updatedat&rows=20&start=" + start + "&facet=lastdate_begin&facet=location_city&refine.lastdate_begin=2023&refine.location_city=" + ville)
               .then((response) => {
                 setData(response.data)
               })
@@ -108,13 +108,13 @@ function Home() {
       }
       else {
         if (keywords !== "") {
-          axios("https://public.opendatasoft.com/api/records/1.0/search/?dataset=evenements-publics-openagenda&q=&rows=20&start=" + start + "&facet=keywords_fr&facet=lastdate_begin&facet=location_city&refine.keywords_fr=" + keywords + "&refine.lastdate_begin=2023&refine.location_city=" + city)
+          axios("https://public.opendatasoft.com/api/records/1.0/search/?dataset=evenements-publics-openagenda&q=&sort=updatedat&rows=20&start=" + start + "&facet=keywords_fr&facet=lastdate_begin&facet=location_city&refine.keywords_fr=" + keywords + "&refine.lastdate_begin=2023&refine.location_city=" + city)
             .then((response) => {
               setData(response.data)
             })
         }
         else {
-          axios("https://public.opendatasoft.com/api/records/1.0/search/?dataset=evenements-publics-openagenda&q=&rows=20&start=" + start + "&facet=lastdate_begin&facet=location_city&refine.lastdate_begin=2023&refine.location_city=" + city)
+          axios("https://public.opendatasoft.com/api/records/1.0/search/?dataset=evenements-publics-openagenda&q=&sort=updatedat&rows=20&start=" + start + "&facet=lastdate_begin&facet=location_city&refine.lastdate_begin=2023&refine.location_city=" + city)
             .then((response) => {
               setData(response.data)
             })
@@ -126,9 +126,11 @@ function Home() {
 
   function goback() {
     setStart(start - parseInt(data.parameters.rows))
+    window.scrollTo(0,0);
   }
   function goforward() {
     setStart(start + parseInt(data.parameters.rows))
+    window.scrollTo(0,0);
   }
 
   return (

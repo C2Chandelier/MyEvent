@@ -6,6 +6,8 @@ import Home from './component/homepage/homepage';
 import SingleEvent from './component/SingleEvent/SingleEvent';
 import Login from './component/login/login';
 import Register from './component/register/register';
+import User from './component/user/user';
+import Profil from './component/profil/profil';
  
 
 export default class App extends Component {
@@ -17,6 +19,8 @@ export default class App extends Component {
           <Route exact path="/event" element={<SingleEvent />}></Route>
           <Route exact path="/register" element={<Register />}></Route>
           <Route exact path="/login" element={<Login />}></Route>
+          <Route exact path="/user/:id" element={<User />}></Route>
+          <Route exact path="/profil" element={<Profil />}></Route>
           </Routes>
       </Router>
     )

@@ -32,12 +32,11 @@ export default function Register(){
               "pseudo": pseudo,
               "mail": email,
               "avatar": image,
-              "description": "Ici renseigne t'as description..."
+              "description": "Ici renseigne ta description..."
             })  
             navigate("/")
         }
        })
-     
     }
 
     return(
