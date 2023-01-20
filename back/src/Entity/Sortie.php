@@ -33,12 +33,12 @@ class Sortie
         return $this->id;
     }
 
-    public function getEventId(): ?int
+    public function getEventId(): ?string
     {
         return $this->event_id;
     }
 
-    public function setEventId(int $event_id): self
+    public function setEventId(string $event_id): self
     {
         $this->event_id = $event_id;
 

@@ -7,6 +7,7 @@ import SingleEvent from './component/SingleEvent/SingleEvent';
 import Register from './component/register/register';
 import User from './component/user/user';
 import Profil from './component/profil/profil';
+import Sortie from './component/sortie/sortie';
  
 
 export default class App extends Component {
@@ -19,6 +20,7 @@ export default class App extends Component {
           <Route exact path="/register" element={<Register />}></Route>
           <Route exact path="/user/:id" element={<User />}></Route>
           <Route exact path="/profil" element={<Profil />}></Route>
+          <Route exact path="/sortie/:id" element={<Sortie />}></Route>
           </Routes>
       </Router>
     )
