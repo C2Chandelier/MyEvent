@@ -12,26 +12,27 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: SortieRepository::class)]
 #[ApiFilter(SearchFilter::class, properties: ['owner_id' => 'exact'])]
-#[ApiResource(paginationEnabled: false)]
+#[ApiResource(paginationEnabled: false,normalizationContext: ['groups' => ['sortie']])]
 class Sortie
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups('sortiesParticipants')]
+    #[Groups(['sortiesParticipants','sortie'])]
     private ?int $id = null;
 
+    
     #[ORM\Column]
-    #[Groups('sortiesParticipants')]
+    #[Groups(['sortiesParticipants','sortie'])]
     private ?string $event_id = null;
 
     #[ORM\ManyToOne]
-    #[Groups('sortiesParticipants')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['sortiesParticipants','sortie'])]
     private ?User $owner_id = null;
 
     #[ORM\Column]
-    #[Groups('sortiesParticipants')]
+    #[Groups(['sortiesParticipants','sortie'])]
     private ?bool $visibility = null;
 
     public function getId(): ?int
