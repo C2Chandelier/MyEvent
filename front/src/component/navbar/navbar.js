@@ -18,15 +18,17 @@ export default function Navbar() {
 
 
     useEffect(() => {
+         
         console.log(id_user)
         if (id_user !== null) {
             axios.get('https://localhost:8000/api/users/' + id_user)
                 .then((res) => {
                     setPseudo(res.data.pseudo)
-                    setAvatar(res.data.avatar)
+                    setAvatar(res.data.avatar) 
+            
                 })
         }
-    }, [])
+    }, [id_user])
 
     function logout() {
         const auth2 = gapi.auth2.getAuthInstance();
@@ -34,11 +36,12 @@ export default function Navbar() {
             auth2.disconnect().then(
                 localStorage.removeItem('id_user'),
                 navigate("/")
+                )
             )
-        )
-    }
-
-    function login(credentialResponse) {
+            }
+            
+            function login(credentialResponse) {
+       
         console.log(credentialResponse)
         let email = credentialResponse.profileObj.email
         axios.get("https://localhost:8000/api/users?mail=" + email)
@@ -48,6 +51,7 @@ export default function Navbar() {
                     console.log(ress.data["hydra:member"][0].id)
                     localStorage.setItem('id_user', ress.data["hydra:member"][0].id)
                     navigate("/")
+                    
                 }
                 else {
                     navigate("/register", { state: credentialResponse.profileObj });
@@ -57,7 +61,7 @@ export default function Navbar() {
 
     return (
         <div className='navbarcontainer'>
-            <span className='logo'>BR</span>
+            <img src="./Mastercard.png" className='logo'/>
             {id_user !== null ?
                 <ul className='list'>
                     <li className='listItem'>
@@ -65,7 +69,7 @@ export default function Navbar() {
                     </li>
                     <li className='listItem'>{pseudo}</li>
                     <li className='listItem'>
-                        <button onClick={logout}>Logout</button>
+                        <img src="./porte.png" id="btnlogout" onClick={logout}/>
                     </li>
                 </ul>
                 :
@@ -159,7 +163,7 @@ export default function Navbar() {
                     <li className='listItem'><GoogleLogout
                 clientId={clientId}
                 buttonText='Logout'
-                onLogoutSuccess={logout}
+                onLogoutSuccess={logout}    
                 
             /></li>
                 </ul>

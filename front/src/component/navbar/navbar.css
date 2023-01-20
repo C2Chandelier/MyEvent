@@ -25,6 +25,9 @@
 .logo{
     height: 100%;
 }
+#btnlogout{
+    height: 30px;
+}
 @media only screen and (max-width: 320px) {
     .navbarcontainer {
         height: 50px;
