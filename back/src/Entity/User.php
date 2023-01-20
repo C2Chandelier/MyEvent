@@ -8,24 +8,28 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ApiFilter(SearchFilter::class, properties: ['mail' => 'exact'])]
+#[ApiFilter(SearchFilter::class, properties: ['mail' => 'exact','pseudo' => 'exact'])]
 #[ApiResource(paginationEnabled: false)]
 class User
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['user','sortie'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['user','sortie'])]
     private ?string $pseudo = null;
 
     #[ORM\Column(length: 255)]
     private ?string $mail = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['user','sortie'])]
     private ?string $avatar = null;
 
     #[ORM\Column(length: 255, nullable: true)]

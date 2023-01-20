@@ -65,10 +65,10 @@ export default function Profil() {
                         <div className="sortiesProfil">
                             {sorties.map((item) => (
                                 <div>
-                                    {item.eventId.image !== "" ?
-                                        <img src={item.eventId.image} alt="photosortie"></img>
+                                    {item.event_id.image !== "" ?
+                                        <img src={item.event_id.image} alt="photosortie"></img>
                                         : null}
-                                    <h3>{item.eventId.title}</h3>
+                                    <h3>{item.event_id.title}</h3>
                                     <Link to={"/sortie/" + item.id}>En savoir plus</Link>
                                 </div>
                             ))}

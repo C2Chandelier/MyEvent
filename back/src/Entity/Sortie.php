@@ -7,25 +7,30 @@ use App\Repository\SortieRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: SortieRepository::class)]
 #[ApiFilter(SearchFilter::class, properties: ['owner_id' => 'exact'])]
-#[ApiResource(paginationEnabled: false)]
+#[ApiResource(paginationEnabled: false,normalizationContext: ['groups' => ['sortie']])]
 class Sortie
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('sortie')]
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Groups('sortie')]
     private ?string $event_id = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups('sortie')]
     private ?User $owner_id = null;
 
     #[ORM\Column]
+    #[Groups('sortie')]
     private ?bool $visibility = null;
 
     public function getId(): ?int

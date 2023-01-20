@@ -5,22 +5,29 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\SortiesParticipantsRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: SortiesParticipantsRepository::class)]
-#[ApiResource]
+#[ApiFilter(SearchFilter::class, properties: ['sortie_id' => 'exact','user_id' => 'exact'])]
+#[ApiResource(paginationEnabled: false,normalizationContext: ['groups' => ['user']])]
 class SortiesParticipants
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('user')]
     private ?int $id = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups('user')]
     private ?Sortie $sortie_id = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups('user')]
     private ?User $user_id = null;
 
     public function getId(): ?int
