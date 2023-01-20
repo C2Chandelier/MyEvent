@@ -23,7 +23,7 @@ export default function SingleEvent() {
             if(data.fields.thumbnail !== undefined){
                 image = data.fields.thumbnail
             }
-            const object = JSON.stringify({"title":titre,"latidude":latitude,"longitude":longitude,"image":image})
+            const object = JSON.stringify({"title":titre,"latitude":latitude,"longitude":longitude,"image":image})
     
             axios.post('https://localhost:8000/api/sorties', {
                 "visibility": true,
@@ -32,10 +32,6 @@ export default function SingleEvent() {
               })
               .then((res)=>{
                 const id_sortie = res.data.id
-                axios.post('https://localhost:8000/api/sorties_participants', {
-                      "sortieId": "api/sorties/"+id_sortie,
-                      "userId": "api/users/"+id_user
-                })
                 navigate("/sortie/"+id_sortie)
             })
         }

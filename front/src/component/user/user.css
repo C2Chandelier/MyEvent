@@ -1,3 +1,11 @@
 .infosUser {
     display: flex;
 }
+.SingleSortieUser {
+    display: flex;
+}
+
+.pseudoAnddesUser {
+    display: flex;
+    flex-direction: column;
+}

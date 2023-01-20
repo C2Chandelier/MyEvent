@@ -3,7 +3,6 @@ import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
 import Navbar from "../navbar/navbar"
 import "./profil.css"
-import GoogleApiWrapper from '../carte'
 
 export default function Profil() {
     const id_user = localStorage.getItem("id_user")
@@ -12,11 +11,12 @@ export default function Profil() {
     const [description, setDescription] = useState("")
     const [avatar, setAvatar] = useState("")
     const [sorties, setSorties] = useState(null)
+    const [sortiesbis, setSortiesbis] = useState(null)
+
 
 
 
     const [modif, setModif] = useState(false)
-    console.log(modif)
 
     useEffect(() => {
         console.log(info)
@@ -31,6 +31,12 @@ export default function Profil() {
             .then((res) => {
                 setSorties(res.data["hydra:member"])
             })
+        axios("https://localhost:8000/api/sorties_participants?user_id=" + id_user)
+            .then((response) => {
+                console.log(response)
+                setSortiesbis(response.data["hydra:member"])
+            })
+
     }, [modif])
 
     function Modif() {
@@ -48,6 +54,22 @@ export default function Profil() {
         setModif(false)
         setInfo(null)
     }
+
+    if (sorties !== null) {
+        sorties.map((item) => {
+            if (typeof (item.event_id) !== 'object') {
+                item.event_id = JSON.parse(item.event_id)
+            }
+        })
+    }
+    if (sortiesbis !== null) {
+        sortiesbis.map((item) => {
+            if (typeof (item.sortie_id.event_id) !== 'object') {
+                item.sortie_id.event_id = JSON.parse(item.sortie_id.event_id)
+            }
+        })
+    }
+
     return (
         <div>
             <Navbar></Navbar>
@@ -63,15 +85,31 @@ export default function Profil() {
                             </div>
                         </div>
                         <div className="sortiesProfil">
-                            {sorties.map((item) => (
-                                <div>
-                                    {item.eventId.image !== "" ?
-                                        <img src={item.eventId.image} alt="photosortie"></img>
-                                        : null}
-                                    <h3>{item.eventId.title}</h3>
-                                    <Link to={"/sortie/" + item.id}>En savoir plus</Link>
-                                </div>
-                            ))}
+                            {sorties !== null ?
+                                sorties.map((item) => (
+                                    <div className="SingleSortieProfil">
+                                        {item.event_id.image !== "" ?
+                                            <img src={item.event_id.image} alt="photosortie"></img>
+                                            : null}
+                                            <div>
+                                        <h3>{item.event_id.title}</h3>
+                                        <p>Vous êtes l'organisteur de cet évenement</p>
+                                        <Link to={"/sortie/" + item.id}>En savoir plus</Link>
+                                        </div>
+                                    </div>
+                                ))
+                                : null}
+                            {sortiesbis !== null ?
+                                sortiesbis.map((item) => (
+                                    <div className="SingleSortieProfil">
+                                        {item.sortie_id.event_id.image !== "" ?
+                                            <img src={item.sortie_id.event_id.image} alt="photosortie"></img>
+                                            : null}
+                                        <h3>{item.sortie_id.event_id.title}</h3>
+                                        <Link to={"/sortie/" + item.sortie_id.id}>En savoir plus</Link>
+                                    </div>
+                                ))
+                                : null}
                         </div>
                     </div>
                     :

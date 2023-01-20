@@ -20,9 +20,9 @@ export default function Sortie() {
         
         if(typeof(object.eventId) !== 'object'){
         object.eventId = JSON.parse(object.eventId)
-        console.log(object.eventId.latitude)
         }
     }
+
     return(
 
         <div>
