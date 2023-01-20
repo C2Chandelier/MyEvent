@@ -137,7 +137,7 @@ export default function Navbar() {
     const [pseudo, setPseudo] = useState("");
     let id_user = localStorage.getItem('id_user');
 
-    
+    console.log(id_user)
    
     if(id_user !== null || id_user !== undefined )
     {
