@@ -18,21 +18,21 @@ class Sortie
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['sortiesParticipants','sortie'])]
+    #[Groups(['user','sortie'])]
     private ?int $id = null;
 
     
     #[ORM\Column]
-    #[Groups(['sortiesParticipants','sortie'])]
+    #[Groups(['user','sortie'])]
     private ?string $event_id = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['sortiesParticipants','sortie'])]
+    #[Groups(['user','sortie'])]
     private ?User $owner_id = null;
 
     #[ORM\Column]
-    #[Groups(['sortiesParticipants','sortie'])]
+    #[Groups(['user','sortie'])]
     private ?bool $visibility = null;
 
     public function getId(): ?int
