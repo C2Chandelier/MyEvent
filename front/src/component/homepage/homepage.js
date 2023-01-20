@@ -15,10 +15,16 @@ function Home() {
   const isMobile = useMediaQuery({ query: '(max-width: 320px)' })
   const isTablet = useMediaQuery({ query: '(min-width: 320px)' })
 
+  useEffect(() => {
+    const handleTabClose = event => {
+      localStorage.removeItem('id_user');
+    };
+
+    window.addEventListener('beforeunload', handleTabClose);
+  }, []);
+
 
   useEffect(() => {
-    console.log(params)
-    console.log(city + "/" + keywords)
     if (params.state !== null) {
       if (params.state.city !== "" && params.state.param !== "") {
         axios("https://public.opendatasoft.com/api/records/1.0/search/?dataset=evenements-publics-openagenda&q=&sort=updatedat&rows=20&start=" + start + "&facet=keywords_fr&facet=lastdate_begin&facet=location_city&refine.keywords_fr=" + params.state.param + "&refine.lastdate_begin=2023&refine.location_city=" + params.state.city)
