@@ -1,5 +1,5 @@
 import './navbar.css';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
@@ -61,15 +61,15 @@ export default function Navbar() {
 
     return (
         <div className='navbarcontainer'>
-            <img src="./Mastercard.png" className='logo'/>
+            <Link to={"/"}><img src="./Mastercard.png" alt="logo" className='logo'/></Link>
             {id_user !== null ?
                 <ul className='list'>
                     <li className='listItem'>
-                        <img src={avatar} alt="avatar" className='avatar'></img>
+                        <Link to={"/profil"}><img src={avatar} alt="avatar" className='avatar'></img></Link>
                     </li>
                     <li className='listItem'>{pseudo}</li>
                     <li className='listItem'>
-                        <img src="./porte.png" id="btnlogout" onClick={logout}/>
+                        <img src="./porte.png" id="btnlogout" alt="logout" onClick={logout}/>
                     </li>
                 </ul>
                 :

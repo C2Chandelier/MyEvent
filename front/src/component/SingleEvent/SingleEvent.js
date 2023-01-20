@@ -7,7 +7,6 @@ export default function SingleEvent() {
     const city = useLocation().state.city
     const param = useLocation().state.param
     const data = useLocation().state.data
-    const API_KEY = "AIzaSyAaCWELQhD7dVoUAprchvklulWycDsmnyE";
 
     console.log(city + param)
     return (
@@ -15,7 +14,7 @@ export default function SingleEvent() {
             <Navbar />
             <div className='SingleItem'>
                 <h1>{data.fields.title_fr}</h1>
-                <div className='titleandimg'>
+                <div className='titleandimgSingle'>
                     {data.fields.thumbnail !== undefined ?
                         <img src={data.fields.thumbnail} alt={data.fields.title_fr}></img>
                         : null}

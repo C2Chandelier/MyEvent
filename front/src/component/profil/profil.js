@@ -1,7 +1,9 @@
 import axios from "axios"
+import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
 import Navbar from "../navbar/navbar"
 import "./profil.css"
+import GoogleApiWrapper from '../carte'
 
 export default function Profil() {
     const id_user = localStorage.getItem("id_user")
@@ -9,6 +11,8 @@ export default function Profil() {
     const [pseudo, setPseudo] = useState("")
     const [description, setDescription] = useState("")
     const [avatar, setAvatar] = useState("")
+    const [sorties, setSorties] = useState(null)
+
 
 
     const [modif, setModif] = useState(false)
@@ -23,6 +27,10 @@ export default function Profil() {
                 setDescription(response.data.description)
                 setAvatar(response.data.avatar)
             })
+        axios("https://localhost:8000/api/sorties?owner_id=api%2Fusers%2F" + id_user)
+            .then((res) => {
+                setSorties(res.data["hydra:member"])
+            })
     }, [modif])
 
     function Modif() {
@@ -36,9 +44,9 @@ export default function Profil() {
                 pseudo: pseudo,
                 description: description
             }, configuration)
-            
-            setModif(false)
-            setInfo(null)
+
+        setModif(false)
+        setInfo(null)
     }
     return (
         <div>
@@ -55,21 +63,26 @@ export default function Profil() {
                             </div>
                         </div>
                         <div className="sortiesProfil">
-                            <p>.map de ses sorties etc</p>
+                            {sorties.map((item) => (
+                                <div>
+                                    {item.eventId.image !== "" ?
+                                        <img src={item.eventId.image} alt="photosortie"></img>
+                                        : null}
+                                    <h3>{item.eventId.title}</h3>
+                                    <Link to={"/sortie/" + item.id}>En savoir plus</Link>
+                                </div>
+                            ))}
                         </div>
                     </div>
                     :
                     <div>
                         <div className="infosProfil">
-                            <img src={info.avatar} alt="avatar"></img>
+                            <img src={avatar} alt="avatar"></img>
                             <div className="pseudoAnddesProfil">
                                 <input type="text" value={pseudo} onChange={(e) => setPseudo(e.target.value)} />
                                 <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} />
                                 <button onClick={SaveModif}>Sauvegarder</button>
                             </div>
-                        </div>
-                        <div className="sortiesProfil">
-                            <p>.map de ses sorties etc</p>
                         </div>
                     </div>
                 : null}

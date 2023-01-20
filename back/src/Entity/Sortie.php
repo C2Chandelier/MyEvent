@@ -5,9 +5,12 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 
 #[ORM\Entity(repositoryClass: SortieRepository::class)]
-#[ApiResource]
+#[ApiFilter(SearchFilter::class, properties: ['owner_id' => 'exact'])]
+#[ApiResource(paginationEnabled: false)]
 class Sortie
 {
     #[ORM\Id]
@@ -16,7 +19,7 @@ class Sortie
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $event_id = null;
+    private ?string $event_id = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
