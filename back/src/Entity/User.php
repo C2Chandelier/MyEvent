@@ -18,18 +18,18 @@ class User
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['user','sortie'])]
+    #[Groups(['user','sortie','message'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user','sortie'])]
+    #[Groups(['user','sortie','message'])]
     private ?string $pseudo = null;
 
     #[ORM\Column(length: 255)]
     private ?string $mail = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['user','sortie'])]
+    #[Groups(['user','sortie','message'])]
     private ?string $avatar = null;
 
     #[ORM\Column(length: 255, nullable: true)]

@@ -12,6 +12,7 @@ export default function Sortie() {
     const id_sortie = useLocation().pathname.split("/").pop()
     const [createur,setCreateur]= useState(false);
     const [pseudo,setPseudo] = useState("")
+    const [message, setMessage] = useState("")
     const id_user = localStorage.getItem('id_user')
     const [player,setPlayer] = useState(false)
 
@@ -49,7 +50,6 @@ export default function Sortie() {
         
         if(typeof(object.event_id) !== 'object'){
         object.event_id = JSON.parse(object.event_id)
-        console.log(object.event_id.latitude)
         }
     }
     function join(){
@@ -64,7 +64,6 @@ export default function Sortie() {
             alert("Connectez vous pour rejoindre un évenement")
         }
     }
-    console.log(player)
     function deleteevent(){
         if(participants !== null)
         {
@@ -119,6 +118,19 @@ export default function Sortie() {
        })
     }
 
+    function envoyer(){
+        if(message !== null && message !== "" && message !== undefined)
+        {
+            axios.post("https://localhost:8000/api/messages",{
+                "sortie": "api/sorties/"+id_sortie,
+                "user": "api/users/"+id_user,
+                "messages": message
+              })
+              .then((res)=>{console.log(res)})
+            console.log(message)
+        }
+    }
+
     
     return(
 
@@ -158,6 +170,8 @@ export default function Sortie() {
                         :<p>Vous êtes le seul participants</p>}
             </div>
         :null}
+        <input className='sortielienspseudo' type="text" value={message} onChange={(e)=>setMessage(e.target.value)} placeholder="Message.." />
+        <button className='sortielienspseudo' onClick={envoyer}>Envoyé</button>
         </div>
     )
 }
