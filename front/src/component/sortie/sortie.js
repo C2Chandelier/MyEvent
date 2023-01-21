@@ -13,6 +13,8 @@ export default function Sortie() {
     const [createur,setCreateur]= useState(false);
     const [pseudo,setPseudo] = useState("")
     const id_user = localStorage.getItem('id_user')
+    const [player,setPlayer] = useState(false)
+
     useEffect(() => {
         axios.get('https://localhost:8000/api/sorties/'+id_sortie)
         .then((res)=>{
@@ -25,11 +27,24 @@ export default function Sortie() {
         })
         axios.get('https://localhost:8000/api/sorties_participants?sortie_id='+id_sortie)
         .then((rep)=>{
+            
             setParticipants(rep.data["hydra:member"])
-           
+            
         })
-    },[])
-    console.log("NOOON",object)
+    },[player])
+
+    useEffect(() => {    
+        if(participants !== null)
+        {
+            participants.map((item)=>{
+                if(item.user_id.id.toString() === id_user){
+                    setPlayer(true)
+                }
+            })
+        }
+    },[participants])
+   
+   
     if(object !== null){
         
         if(typeof(object.event_id) !== 'object'){
@@ -38,9 +53,18 @@ export default function Sortie() {
         }
     }
     function join(){
-
+        if(id_user !== null){
+        axios.post("https://localhost:8000/api/sorties_participants", {
+            "sortieId": "api/sorties/"+id_sortie,
+            "userId": "api/users/"+id_user
+          })
+          setPlayer(true)
+        }
+        else{
+            alert("Connectez vous pour rejoindre un évenement")
+        }
     }
-    console.log(participants)
+    console.log(player)
     function deleteevent(){
         if(participants !== null)
         {
@@ -61,16 +85,17 @@ export default function Sortie() {
             if(res.data["hydra:totalItems"] === 1)
             {
                 let id_invite = res.data["hydra:member"][0].id
-
-                axios("https://localhost:8000/api/sorties_participants?sortie_id="+id_sortie+"?user_id="+id_invite)
+                axios("https://localhost:8000/api/sorties_participants?sortie_id="+id_sortie+"&user_id="+id_user)
                     .then((resp)=>{
-                        if(resp.data["hydra;totalItems"] === 0){
+                        console.log(resp)
+                        if(resp.data["hydra:totalItems"] === 0){
                         axios.post('https://localhost:8000/api/sorties_participants',{
                             
                                 "sortieId": "api/sorties/"+id_sortie,
                                 "userId": "api/users/"+id_invite    
                         })
                         alert("Utilisateur invité")
+                        setPlayer(true)
                     }
                     else{
                         alert("Utilisateur déjà présent")
@@ -84,6 +109,14 @@ export default function Sortie() {
             }
            
         })
+    }
+    function leave(){
+       axios.get("https://localhost:8000/api/sorties_participants?sortie_id="+id_sortie+"&user_id="+id_user)
+       .then((rep)=>{
+        let id_sortie_participants =  rep.data["hydra:member"][0].id
+        axios.delete("https://localhost:8000/api/sorties_participants/"+id_sortie_participants)
+        setPlayer(false)
+       })
     }
 
     
@@ -103,8 +136,13 @@ export default function Sortie() {
                     <button className='sortielienspseudo' onClick={inviter}>Inviter</button>
                 </div>
                 :
-                <button onClick={join}>Rejoindre cet évenement </button>
+                
+                player === true ?
+                    <button className='sortielienspseudo' onClick={leave}>Quitter l'evenement</button>
+                    :
+                    <button className='sortielienspseudo' onClick={join}>Rejoindre cet évenement </button>               
                 }
+                
                     {participants !== null ?
                 <div>
                     <h4>Participants: {participants.length}</h4>

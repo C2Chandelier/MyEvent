@@ -3,14 +3,23 @@ import './SingleEvent.css'
 import Navbar from '../navbar/navbar'
 import GoogleApiWrapper from '../carte'
 import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 export default function SingleEvent() {
     const navigate = useNavigate();
     const city = useLocation().state.city
     const param = useLocation().state.param
     const data = useLocation().state.data
-
+    const [event, setEvent] = useState(null)
     const  id_user = localStorage.getItem('id_user')
+
+    useEffect(() => {
+        axios("https://localhost:8000/api/sorties?event_id="+data.fields.title_fr)
+            .then((res)=> {
+                console.log(res)
+                setEvent(res.data["hydra:member"])
+            })
+    },[])
     
     function create(){
         if(id_user !== undefined && id_user !== null ){
@@ -62,6 +71,16 @@ export default function SingleEvent() {
                     <div dangerouslySetInnerHTML={{ __html: data.fields.longdescription_fr }} />
                     : data.fields.description_fr}
                 <Link to={"/"} state={{ city: city, param: param }} id="btn-retour">Retour</Link>
+                <div className='eventOrga'>
+                    {event !== null ?
+                    <div>
+                    <h3>Ces utilisateurs ont organisé une sortie sur cet évenement :</h3>
+                    {event.map((item)=>(
+                        <Link to={"/user/"+item.owner_id.id} className="singleEventPseudo">{item.owner_id.pseudo}</Link>
+                    ))}
+                    </div>
+                    :null}
+                </div>
             </div>
         </div>
     )

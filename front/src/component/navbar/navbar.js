@@ -60,6 +60,7 @@ export default function Navbar() {
 
     return (
         <div className='navbarcontainer'>
+            <Link to={"/user/46"}>CHARLELIE</Link>
             <Link to={"/"}><img src="./Mastercard.png" alt="logo" className='logo'/></Link>
             {id_user !== null ?
                 <ul className='list'>

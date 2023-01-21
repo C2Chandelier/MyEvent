@@ -11,7 +11,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 
 #[ORM\Entity(repositoryClass: SortieRepository::class)]
-#[ApiFilter(SearchFilter::class, properties: ['owner_id' => 'exact'])]
+#[ApiFilter(SearchFilter::class, properties: ['owner_id' => 'exact','event_id' => 'partial'])]
 #[ApiResource(paginationEnabled: false,normalizationContext: ['groups' => ['sortie']])]
 class Sortie
 {
