@@ -21,7 +21,6 @@ export default function User() {
             })
         axios("https://localhost:8000/api/sorties_participants?user_id=" + id_user)
             .then((response) => {
-                console.log(response)
                 setSortiesbis(response.data["hydra:member"])
             })
     }, [])

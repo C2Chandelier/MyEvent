@@ -13,6 +13,7 @@ export default function Sortie() {
     const [createur,setCreateur]= useState(false);
     const [pseudo,setPseudo] = useState("")
     const [message, setMessage] = useState("")
+    const [reception, setReception] = useState(null)
     const id_user = localStorage.getItem('id_user')
     const [player,setPlayer] = useState(false)
 
@@ -32,7 +33,11 @@ export default function Sortie() {
             setParticipants(rep.data["hydra:member"])
             
         })
-    },[player])
+        axios("https://localhost:8000/api/messages?sortie="+id_sortie)
+            .then((response)=>{
+                setReception(response.data["hydra:member"])
+            })
+    },[player,message])
 
     useEffect(() => {    
         if(participants !== null)
@@ -86,7 +91,6 @@ export default function Sortie() {
                 let id_invite = res.data["hydra:member"][0].id
                 axios("https://localhost:8000/api/sorties_participants?sortie_id="+id_sortie+"&user_id="+id_user)
                     .then((resp)=>{
-                        console.log(resp)
                         if(resp.data["hydra:totalItems"] === 0){
                         axios.post('https://localhost:8000/api/sorties_participants',{
                             
@@ -126,20 +130,18 @@ export default function Sortie() {
                 "user": "api/users/"+id_user,
                 "messages": message
               })
-              .then((res)=>{console.log(res)})
-            console.log(message)
+            setMessage("")
         }
     }
 
-    
     return(
 
         <div>
             <Navbar />
             {object !== null  ?
-            <div>
+            <div className='containerSortie'>
+                <div>
                 <h1>{object.event_id.title}</h1>
-                <GoogleApiWrapper lat={object.event_id.latitude} lng={object.event_id.longitude} />
                 {createur === true ? 
                 <div>
                     <p>Vous êtes l'organisateur de cet évenement</p>
@@ -161,17 +163,38 @@ export default function Sortie() {
 
                     <ul>
                         {participants.map((item)=> (
-                           <li className='sortielienspseudo' key={item.user_id.pseudo}> <Link  to={"/user/"+item.user_id.id}>{item.user_id.pseudo}</Link></li>
+                           <li className='sortielienspseudo' key={item.user_id.pseudo}>
+                            <img src={item.user_id.avatar} alt='avatar'></img>
+                             <Link  to={"/user/"+item.user_id.id}>{item.user_id.pseudo}</Link>
+                             </li>
                             ))
                     }
                         
                     </ul>
                 </div>
                         :<p>Vous êtes le seul participants</p>}
+                </div>
+                <GoogleApiWrapper lat={object.event_id.latitude} lng={object.event_id.longitude} />
             </div>
         :null}
         <input className='sortielienspseudo' type="text" value={message} onChange={(e)=>setMessage(e.target.value)} placeholder="Message.." />
         <button className='sortielienspseudo' onClick={envoyer}>Envoyé</button>
+        {reception !== null ? 
+        <div className='receptionMessage sortielienspseudo'>
+            {reception.map((item)=>(
+             item.user.id === parseInt(id_user) ? 
+             <div className='singleMessage end'>
+                <Link to={"/user/"+item.user.id}>{item.user.pseudo}</Link>
+                <p>{item.messages}</p>
+            </div>
+                :
+             <div className='singleMessage start'>
+                <Link to={"/user/"+item.user.id}>{item.user.pseudo}</Link>
+                <p>{item.messages}</p>
+            </div>               
+            ))}
+        </div>
+        :null}
         </div>
     )
 }

@@ -8,9 +8,12 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
 #[ApiResource(paginationEnabled: false,normalizationContext: ['groups' => ['message']])]
+#[ApiFilter(SearchFilter::class, properties: ['sortie' => 'exact'])]
 class Message
 {
     #[ORM\Id]

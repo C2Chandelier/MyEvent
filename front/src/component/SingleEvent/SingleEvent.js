@@ -16,8 +16,9 @@ export default function SingleEvent() {
     useEffect(() => {
         axios("https://localhost:8000/api/sorties?event_id="+data.fields.title_fr)
             .then((res)=> {
-                console.log(res)
-                setEvent(res.data["hydra:member"])
+                if(res.data["hydra:totalItems"] !== 0){
+                    setEvent(res.data["hydra:member"])
+                }
             })
     },[])
     
@@ -50,7 +51,6 @@ export default function SingleEvent() {
 
     }
 
-    console.log(city + param)
     return (
         <div>
             <Navbar />
@@ -68,7 +68,7 @@ export default function SingleEvent() {
                     <GoogleApiWrapper lat={data.fields.location_coordinates[0]} lng={data.fields.location_coordinates[1]} />
                 </div>
                 {data.fields.longdescription_fr !== undefined ?
-                    <div dangerouslySetInnerHTML={{ __html: data.fields.longdescription_fr }} />
+                    <div className='description' dangerouslySetInnerHTML={{ __html: data.fields.longdescription_fr }} />
                     : data.fields.description_fr}
                 <Link to={"/"} state={{ city: city, param: param }} id="btn-retour">Retour</Link>
                 <div className='eventOrga'>

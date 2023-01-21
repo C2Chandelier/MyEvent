@@ -14,23 +14,15 @@ export default function Register(){
     const [pseudo, setPseudo] = useState("");
     const navigate = useNavigate();
     const parametre = useLocation();
-    console.log(parametre.state)
    
     function ajoutbdd(e){
         
        let email = parametre.state.email
-       console.log(email)
        let image = parametre.state.imageUrl
        axios.get("https://localhost:8000/api/users?mail="+email)
        .then((res)=>{
-        console.log("C'est la reponse du get ",res.data['hydra:totalItems'])
-        if(res.data['hydra:totalItems']  > 0)
+        if(res.data['hydra:totalItems']  === 0)
         {
-            console.log("c'est superior a 0 tas deja un compte fro");
-        }
-        else
-        {
-            console.log("c'est inferieur du coup on en crée 1")
             axios.post('https://localhost:8000/api/users',{
               "pseudo": pseudo,
               "mail": email,

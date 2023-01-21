@@ -2,3 +2,23 @@
     position: relative;
     z-index: 100;
 }
+
+.singleMessage {
+    display: flex;
+}
+
+.end {
+    justify-content: end;
+}
+
+.start {
+    justify-content: start;
+}
+
+.receptionMessage {
+    width: 50%;
+}
+
+.containerSortie {
+    display: flex;
+}

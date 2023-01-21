@@ -19,7 +19,6 @@ export default function Profil() {
     const [modif, setModif] = useState(false)
 
     useEffect(() => {
-        console.log(info)
         axios("https://localhost:8000/api/users/" + id_user)
             .then((response) => {
                 setInfo(response.data)
@@ -33,7 +32,6 @@ export default function Profil() {
             })
         axios("https://localhost:8000/api/sorties_participants?user_id=" + id_user)
             .then((response) => {
-                console.log(response)
                 setSortiesbis(response.data["hydra:member"])
             })
 
